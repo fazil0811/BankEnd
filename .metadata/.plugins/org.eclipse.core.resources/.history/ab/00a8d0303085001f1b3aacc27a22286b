@@ -1,0 +1,19 @@
+package com.front;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class FrontEndDAO {
+	
+	@Autowired
+	FrontEndRepository fr;
+	
+	public String postvalue(List<FrontEndEntity> a) {
+		fr.saveAll(a);
+		return "success";
+	}
+
+}

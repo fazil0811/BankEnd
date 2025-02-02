@@ -1,0 +1,138 @@
+package com.emp.service;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.emp.dao.EmployDAO;
+import com.emp.ecxeption.NameException;
+import com.emp.entity.EmployEntity;
+
+@Service
+public class EmployService {
+
+	@Autowired
+	EmployDAO vd;
+
+	public String postEmp(EmployEntity a) {
+		return vd.postEmp(a);
+	}
+
+	public String postEmpl(List<EmployEntity> a) {
+		return vd.postEmpl(a);
+	}
+
+	public List<EmployEntity> presentEmp() {
+		return vd.presentEmp();
+	}
+
+	public EmployEntity preEmp(@RequestParam int a) {
+		return vd.preEmp(a);
+	}
+	
+	public List<String>getMales() {
+		List<EmployEntity>emps=vd.presentEmp();
+		List<String>empNames=emps.stream().map(x->x.getGender()).collect(Collectors.toList());
+		return empNames;
+	}
+	
+	public List<EmployEntity>getFemale() {
+		List<EmployEntity>empf=vd.presentEmp();
+		List<EmployEntity>empfnames=empf.stream().filter(x->x.getGender().equals("female")).collect(Collectors.toList());
+		return empfnames;
+	}
+	
+	public EmployEntity maxSalary() {
+		List<EmployEntity>max=vd.presentEmp();
+		EmployEntity maxs=max.stream().max(Comparator.comparing(EmployEntity::getSalary)).get();
+		return maxs;
+	}
+	
+	public int getSum() {
+		List<EmployEntity>sums=vd.presentEmp();
+		int summ=sums.stream().map(x->x.getAge()).collect(Collectors.summingInt(x->x));
+		return summ;
+	}
+	
+	public double getAvg() {
+		List<EmployEntity>avgg=vd.presentEmp();
+		double avgs=avgg.stream().collect(Collectors.averagingInt(x->x.getSalary()));
+		//double avgs=avgg.stream().map(x->x.getSalary()).mapToInt(Integer::intValue).average().getAsDouble();
+		return avgs;
+	}
+	public List<EmployEntity> getObj() {
+		List<EmployEntity>obj=vd.presentEmp();
+		List<EmployEntity>objs=obj.stream().filter(x->x.getName().startsWith("f") && x.getSalary()>50000).collect(Collectors.toList());
+		return objs;
+	}
+	
+	public List<EmployEntity> getName() {
+		List<EmployEntity>name=vd.presentEmp();
+		List<EmployEntity>names=name.stream().sorted(Comparator.comparing(EmployEntity::getName).reversed()).collect(Collectors.toList());
+		return names;
+	}
+	
+	public Long getCount() {
+		List<EmployEntity>count=vd.presentEmp();
+		Long counts=count.stream().filter(x->x.getExperience()>2).count();
+		return counts;
+	}
+	
+	public Map<String,Long>getField() {
+		List<EmployEntity>fil=vd.presentEmp();
+		Map<String,Long>fils=fil.stream().collect(Collectors.groupingBy(x->x.getField(),Collectors.counting()));
+		return fils;
+	}
+	public List<EmployEntity>getbyName(String a) {
+		return vd.getbyName(a);
+	}
+	
+	public List<EmployEntity>getbyNam(int a,int b) {
+		return vd.getbyNam(a, b);
+	}
+	public List<EmployEntity>getbyN(String a) {
+		return vd.getbyN(a);
+	}
+	
+	public List<EmployEntity>getbyOb() {
+		return vd.getbyOb();
+	}
+	
+	public List<EmployEntity>getbySt(char a,char b) {
+		return vd.getbySt(a,b);
+	}
+	
+	//exception
+	
+	public String getid(int a)throws NameException {
+		if(vd.getid(a).equals("aabc")) {
+		return vd.getid(a);
+	}
+		else {
+			throw new NameException("aabc is not in that id");
+		}
+	}
+	
+	public String getiid(int a) {
+		try {
+			if (vd.getiid(a).equals("bbcc")) {
+				return vd.getiid(a);
+			} else {
+				return "error";
+			}
+		} catch (Exception na) {
+			return "caught";
+		
+		}
+//		finally { //it will finally output only
+//			return "aaa";
+//		}
+	}
+}

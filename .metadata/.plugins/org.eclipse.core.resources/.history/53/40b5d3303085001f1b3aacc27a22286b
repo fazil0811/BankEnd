@@ -1,0 +1,18 @@
+package com.front;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class FrontEndService {
+	
+	@Autowired
+	FrontEndDAO fd;
+	
+	public String postvalue(List<FrontEndEntity> a) {
+		return fd.postvalue(a);
+	}
+
+}

@@ -1,0 +1,4 @@
+INFO    2024-09-23 15:16:27,577 [restartedMain] com.log.Log4jprojectApplication  - this is information
+WARN    2024-09-23 15:16:27,578 [restartedMain] com.log.Log4jprojectApplication  - this is warning
+ERROR   2024-09-23 15:16:27,578 [restartedMain] com.log.Log4jprojectApplication  - this is error
+FATAL   2024-09-23 15:16:27,578 [restartedMain] com.log.Log4jprojectApplication  - this is critical error

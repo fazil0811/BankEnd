@@ -1,0 +1,27 @@
+package com.emp.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.emp.entity.EmployEntity;
+
+public interface EmployRepository extends JpaRepository<EmployEntity, Integer> {
+	@Query(value = "select * from employee where name=?", nativeQuery = true)
+	public List<EmployEntity> getbyName(String a);
+
+	@Query(value = "select * from employee where salary>? && salary<?", nativeQuery = true)
+	public List<EmployEntity> getbyNam(int a, int b);
+
+	@Query(value = "select e from EmployEntity e where e.name=:p")
+	public List<EmployEntity> getbyN(@Param("p") String a);
+
+	@Query(value = "select * from employee", nativeQuery = true)
+	public List<EmployEntity> getbyOb();
+
+	@Query(value = "select * from employee where name like ?% or name like ?%", nativeQuery = true)
+	public List<EmployEntity> getbySt(char a, char b);
+
+}
